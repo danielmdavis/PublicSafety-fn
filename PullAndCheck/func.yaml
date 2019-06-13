@@ -1,0 +1,9 @@
+schema_version: 20180708
+name: pullandcheck
+version: 0.0.14
+runtime: node
+entrypoint: node func.js
+triggers:
+- name: pullandcheck
+  type: http
+  source: /pullandcheck
