@@ -3,6 +3,7 @@ const fdk = require('@fnproject/fdk')
 fdk.handle(function (input) {
   let max_temp = 45
   let message = 'just chillin'
+  let netsuite = ''
 
   var request = require("request");
   var options = {
@@ -14,15 +15,17 @@ fdk.handle(function (input) {
     },
     body: {"data":input.temp}
   }
+  request(options, function (error, response, body) {
+    netsuite = body
+    if (error) throw new Error(error);
+    console.log(body);
+  })
 
   if (input.temp > max_temp) {
     message = 'FIRE???'
-
-    request(options, function (error, response, body) {
-      if (error) throw new Error(error);
-      console.log(body);
-    })
-
   }
-  return { message }
+
+  let output = message + ' ' + netsuite
+
+  return { output }
 })
