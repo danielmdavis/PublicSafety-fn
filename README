@@ -1,0 +1,7 @@
+# README for Public Safety 2.0 functions
+
+## To install:
+
+* Put the wallet file for the Oracle cloud database you're using in the `wallet/` directory.
+
+* `./buildme.sh`

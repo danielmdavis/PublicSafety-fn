@@ -46,6 +46,9 @@ RUN npm install
 # If you are building your code for production
 # RUN npm ci --only=production
 
+# Install Fn
+# RUN curl -LSs https://raw.githubusercontent.com/fnproject/cli/master/install | sh
+
 # Bundle app source
 COPY . /usr/src/app
 
@@ -60,7 +63,11 @@ COPY ./wallet/* /usr/lib/oracle/19.3/client64/lib/network/admin/
 # ENV PATH=$PATH:/usr/lib/oracle/${release}.${update}/client64/bin
 
 # open port 5000 on the container
-EXPOSE 5000
+#EXPOSE 5000
+#EXPOSE 8080
+
+# add a user to run fn
+RUN addgroup -g 1000 -S fn && adduser -S -u 1000 -G fn fn
 
 # run the application in the container
-# CMD [ "npm", "start" ]
+#CMD [ "/usr/local/bin/fn", "start" ]
