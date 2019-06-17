@@ -1,7 +1,7 @@
 schema_version: 20180708
 name: telldroneaboutticket
-version: 0.0.11
-runtime: node
+version: 0.0.18
+runtime: docker
 entrypoint: node func.js
 triggers:
 - name: telldroneaboutticket
