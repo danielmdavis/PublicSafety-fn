@@ -1,6 +1,6 @@
 schema_version: 20180708
 name: handledroneimage
-version: 0.0.29
+version: 0.0.43
 runtime: docker
 entrypoint: node func.js
 triggers:

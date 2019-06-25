@@ -1,8 +1,8 @@
 const fdk=require('@fnproject/fdk');
+const request=require("request");
 
 fdk.handle(function(input){
  
-  var request = require("request");
 
   var options = {
     method: 'POST',
@@ -11,7 +11,7 @@ fdk.handle(function(input){
     {
       'Postman-Token': 'e254cfd3-723c-4eea-a50c-4bf03d4dce0a',
       'cache-control': 'no-cache',
-      Authorization: 'Basic Y2xvdWQuYWRtaW46I0FCQ0RlZmdoMTIzNCM=',
+      'Authorization': 'Basic Y2xvdWQuYWRtaW46I0FCQ0RlZmdoMTIzNCM=',
       'Content-Type': 'application/json'
     },
     body:
@@ -19,16 +19,25 @@ fdk.handle(function(input){
       timestamp: '13-06-19',
       temperature: '489.2',
       location: 'Burlington, MA',
-      id: '211',
+      id: 215,
       status: '1'
     },
-    json: true
+    json: true,
+    timeout: 60000
   };
 
   request(options, function (error, response, body) {
-    if (error) throw new Error(error);
-    console.log(body);
+    if (error) {
+      if (error.code==='ETIMEDOUT') {
+        console.log(error)
+        process.exit(0)
+      }
+      else { 
+
+        throw new Error(error.code + error) 
+      }
+    } else { return {body} }
+
   });
 
-  return {body}
 })
