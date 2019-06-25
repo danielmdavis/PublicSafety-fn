@@ -1,5 +1,6 @@
 const fdk=require('@fnproject/fdk');
-const request=require("request");
+const request=require("request-promise-native");
+
 
 fdk.handle(function(input){
  
@@ -26,7 +27,7 @@ fdk.handle(function(input){
     timeout: 60000
   };
 
-  request(options, function (error, response, body) {
+  await request(options, function (error, response, body) {
     if (error) {
       if (error.code==='ETIMEDOUT') {
         console.log(error)
@@ -36,8 +37,11 @@ fdk.handle(function(input){
 
         throw new Error(error.code + error) 
       }
-    } else { return {body} }
+    } else { 
+    
+      return new Promise((resolve,reject)=>{
+        setTimeout(()=>resolve(body),60000);
+      })
 
   });
-
 })
