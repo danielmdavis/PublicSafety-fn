@@ -1,6 +1,6 @@
 schema_version: 20180708
 name: pullandcheck
-version: 0.0.23
+version: 0.0.33
 runtime: docker
 entrypoint: node func.js
 triggers:
