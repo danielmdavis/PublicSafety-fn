@@ -1,13 +1,11 @@
 const fdk=require('@fnproject/fdk');
-const request=require("request-promise-native");
+const request=require('request');
 
 
-fdk.handle(function(input){
- 
-
+function RESTcaller (inputId, context) {
   var options = {
     method: 'POST',
-    url: 'https://BurlingtonHUB-orasenatdpltintegration01.integration.ocp.oraclecloud.com:443/ic/api/integration/v1/flows/rest/PUBLIC_SAFETY_V2/1.0/metadata/ticket',
+    uri: 'https://BurlingtonHUB-orasenatdpltintegration01.integration.ocp.oraclecloud.com:443/ic/api/integration/v1/flows/rest/PUBLIC_SAFETY_V2/1.0/metadata/ticket',
     headers:
     {
       'Postman-Token': 'e254cfd3-723c-4eea-a50c-4bf03d4dce0a',
@@ -20,28 +18,28 @@ fdk.handle(function(input){
       timestamp: '13-06-19',
       temperature: '489.2',
       location: 'Burlington, MA',
-      id: 215,
+      id: inputId,
       status: '1'
     },
-    json: true,
-    timeout: 60000
+    json: true
   };
 
-  await request(options, function (error, response, body) {
-    if (error) {
-      if (error.code==='ETIMEDOUT') {
-        console.log(error)
-        process.exit(0)
+  return new Promise( function (resolve, reject) {
+    request(options, function (error, response, body) {
+      if (err) return reject(err);
+      try {
+        resolve(body);
+      } catch(e) {
+        reject(e);
       }
-      else { 
-
-        throw new Error(error.code + error) 
-      }
-    } else { 
-    
-      return new Promise((resolve,reject)=>{
-        setTimeout(()=>resolve(body),60000);
-      })
-
+    });
   });
-})
+}
+
+
+// When I call RESTcaller(223) by itself, it runs appropriately.
+// When I wrap it in fdk.handle (as below), the request happens, but the function never returns.
+
+fdk.handle(function (input, ctx) {
+  return RESTcaller(input);
+});

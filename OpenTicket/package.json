@@ -7,7 +7,6 @@
 	"license": "Apache-2.0",
 	"dependencies": {
 		"@fnproject/fdk": ">=0.0.15",
-		"fn": "^0.2.0",
-		"request": "^2.88.0"
+		"request": "^2.88.0",
 	}
 }
