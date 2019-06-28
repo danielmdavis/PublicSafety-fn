@@ -2,12 +2,18 @@
 
 ## To install:
 
-* Put the wallet file for the Oracle cloud database you're using in the `wallet/` directory in each subdirectory.
+* Make sure you're logged into Docker on the command line, using the credentials Shane can provide. (The user is orasenatdpltintegration01/Burlington-faas-user.)
 
-* Make sure you're logged into Docker on the command line.
+* Copy `oci.yaml` into your `~/.fn/contexts/` directory to set up a context called `oci`.
 
-* `./buildme.sh` will build and deploy all of the components of an app called PublicSafety.
+* Test the whole thing out by running `fn list apps.` For a full guide on getting started, see <https://blogs.oracle.com/developers/oracle-functions:-serverless-on-oracle-cloud-developers-guide-to-getting-started-quickly>.
 
-## Developer next steps:
+## To deploy functions as you revise them:
 
-* `hellodb` contains an example for how to load the `oracledb` database library. It needs to be built out further to test a connection to an actual database, following the instructions in step 6 of <https://oracle.github.io/learning-library/workshops/autonomous-transaction-processing/?page=LabGuide500Configurenode.jsAppWithATP.md>.
+* chdir into one of the function directories (currently, `OpenTicket` and `TellDroneAboutTicket`).
+
+* `fn -v deploy --app ps20` to send the app up to OCI.
+
+## TBD process for local development without deployment to OCI
+
+* _fill me in_
