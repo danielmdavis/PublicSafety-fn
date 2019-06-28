@@ -8,7 +8,6 @@ function RESTcaller (inputId, context) {
     uri: 'https://burlingtonhub-orasenatdpltintegration01.integration.ocp.oraclecloud.com/ic/api/integration/v1/flows/rest/DRONETRIGGER/1.0/dronetrigger',
     headers:
     {
-      'Postman-Token': 'e254cfd3-723c-4eea-a50c-4bf03d4dce0a',
       'cache-control': 'no-cache',
       'Authorization': 'Basic Y2xvdWQuYWRtaW46I0FCQ0RlZmdoMTIzNCM=',
       'Content-Type': 'application/json'
