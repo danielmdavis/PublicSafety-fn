@@ -23,10 +23,14 @@ function RESTcaller (inputId, context) {
 
   return new Promise( function (resolve, reject) {
     request(options, function (error, response, body) {
-      if (err) return reject(err);
+      if (error) {
+        console.log("error in request: " + err);
+        return reject(error);
+      }
       try {
         resolve(body);
       } catch(e) {
+        console.log("error in catch: " + e);
         reject(e);
       }
     });
