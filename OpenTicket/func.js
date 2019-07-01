@@ -6,6 +6,7 @@ const request=require('request');
 // Opens a ticket on NetSuite about drone activity and a potential fire.
 
 function RESTcaller (input) {
+  //console.log("input received: " + input);
   var options = {
     method: 'POST',
     uri: 'https://BurlingtonHUB-orasenatdpltintegration01.integration.ocp.oraclecloud.com:443/ic/api/integration/v1/flows/rest/PUBLIC_SAFETY_V2/1.0/metadata/ticket',
@@ -33,6 +34,7 @@ function RESTcaller (input) {
         return reject(error);
       }
       try {
+//        console.log("body returned: " + body);
         resolve(body);
       } catch(e) {
         console.log("error in catch: " + e);
