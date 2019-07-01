@@ -1,10 +1,11 @@
 {
-	"name": "updateticket",
+	"name": "hellofn",
     "version": "1.0.0",
-	"description": "update Netsuite ticket",
+	"description": "example function",
 	"main": "func.js",
 	"author": "",
 	"license": "Apache-2.0",
 	"dependencies": {
+		"@fnproject/fdk": ">=0.0.15"
 	}
 }

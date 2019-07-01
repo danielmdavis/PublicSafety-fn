@@ -1,10 +1,10 @@
 const fdk=require('@fnproject/fdk');
 const request=require('request');
 
-# UpdateTicket
-#
-# Updates a Netsuite ticket about a potential fire with new information.
-# TODO: how does this code need to be different than OpenTicket?
+// UpdateTicket
+//
+// Updates a Netsuite ticket about a potential fire with new information.
+// TODO: how does this code need to be different than OpenTicket?
 
 function RESTcaller (input) {
   var options = {
@@ -29,10 +29,14 @@ function RESTcaller (input) {
 
   return new Promise( function (resolve, reject) {
     request(options, function (error, response, body) {
-      if (err) return reject(err);
+      if (error) {
+        console.log("error in request: " + err);
+        return reject(error);
+      }
       try {
         resolve(body);
       } catch(e) {
+        console.log("error in catch: " + e);
         reject(e);
       }
     });
