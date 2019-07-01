@@ -1,11 +1,11 @@
 {
-	"name": "OpenTicket",
+	"name": "openticket",
 	"version": "1.0.0",
-	"description": "example function",
+	"description": "Open a ticket on Netsuite about drone activity",
 	"main": "func.js",
 	"author": "",
 	"license": "Apache-2.0",
 	"dependencies": {
-		"request": "^2.88.0"
+		"@fnproject/fdk": "0.0.15"
 	}
 }

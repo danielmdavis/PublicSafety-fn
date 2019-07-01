@@ -1,4 +1,9 @@
 schema_version: 20180708
 name: openticket
-version: 0.0.2
+version: 0.0.1
 runtime: docker
+entrypoint: node func.js
+triggers:
+- name: openticket
+  type: http
+  source: /openticket
