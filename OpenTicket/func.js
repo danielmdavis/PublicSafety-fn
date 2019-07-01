@@ -1,6 +1,9 @@
 const fdk=require('@fnproject/fdk');
 const request=require('request');
 
+// OpenTicket
+//
+// Opens a ticket on NetSuite about drone activity and a potential fire.
 
 function RESTcaller (input) {
   var options = {
@@ -25,10 +28,14 @@ function RESTcaller (input) {
 
   return new Promise( function (resolve, reject) {
     request(options, function (error, response, body) {
-      if (err) return reject(err);
+      if (error) {
+        console.log("error in request: " + err);
+        return reject(error);
+      }
       try {
         resolve(body);
       } catch(e) {
+        console.log("error in catch: " + e);
         reject(e);
       }
     });
