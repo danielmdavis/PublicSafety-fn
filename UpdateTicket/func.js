@@ -4,12 +4,12 @@ const request=require('request');
 // UpdateTicket
 //
 // Updates a Netsuite ticket about a potential fire with new information.
-// TODO: how does this code need to be different than OpenTicket?
+// This code is basically the same as OpenTicket, except for the URI of the endpoint being hit.
 
 function RESTcaller (input) {
   var options = {
     method: 'POST',
-    uri: 'https://BurlingtonHUB-orasenatdpltintegration01.integration.ocp.oraclecloud.com:443/ic/api/integration/v1/flows/rest/PUBLIC_SAFETY_V2/1.0/metadata/ticket',
+    uri: 'https://burlingtonhub-orasenatdpltintegration01.integration.ocp.oraclecloud.com/ic/api/integration/v1/flows/rest/UPDATE_PUBLIC_SAFETY/1.0/ticket',
     headers:
     {
       'cache-control': 'no-cache',
@@ -22,7 +22,7 @@ function RESTcaller (input) {
       temperature: input.temperature, // '489.2'
       location: input.location,       // 'Burlington, MA'
       id: input.id,                    // an integer
-      status: input.status            // '1'
+      status: input.status            // '2' means In Progress
     },
     json: true
   };
