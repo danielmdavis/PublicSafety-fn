@@ -1,6 +1,7 @@
 const fdk=require('@fnproject/fdk');
 const request=require('request');
 const fs=require('fs');
+const fetch=require('node-fetch');
 
 // Evaluate the drone's image and find out whether it looks like a fire.
 // curl -X POST --noproxy '*' http://132.145.211.255:9093/oaa-scoring/services/v1/myservices/adapted_1/score  -F  "imageData=@$i" -H "Content-Type: multipart/form-data; boundary=BOUNDARY" -H "Accept: application/json" -w "   \n\n\n\n"
@@ -44,16 +45,15 @@ function POSTcaller (inputFileName, inputFileData, context) {
   })
 }
 
-function download (uri, filename, callback) {
-  request.head(uri, function(err, res, body){
-    if (err) {
-      console.log('Error getting '+ uri + ' : ' + err)
-    } else {
-      console.log('content-type:', res.headers['content-type']);
-      console.log('content-length:', res.headers['content-length']);
-      request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
-    }
-  })
+function download (uri, filename) {
+  fetch(uri)
+    .then(res => {
+      const dest = fs.createWriteStream(filename)
+      res.body.pipe(dest)
+    })
+    .catch(function (err) {
+      console.log('downloading ' + uri + ' to ' + filename + ' failed')
+    })
 }
 
 
@@ -67,11 +67,10 @@ fdk.handle(async function (input, ctx) {
   // save image to local filesystem
 
   var retval = ''
-  download(inputFileURL, inputFileName, await function() {
-    console.log('downloaded image successfully')
-  })
+  await download(inputFileURL, inputFileName)
+
   // and then read it back out
-  var inputFileData = await fs.createReadStream(inputFileName)
+  var inputFileData = fs.createReadStream(inputFileName)
   console.log("Trying to recognize " + inputFileName)
 
   retval = await POSTcaller(inputFileName, inputFileData)
