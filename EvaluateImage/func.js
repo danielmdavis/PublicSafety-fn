@@ -45,21 +45,24 @@ function POSTcaller (inputFileName, inputFileData, context) {
   })
 }
 
-function download (uri, filename) {
-  fetch(uri)
+async function download (uri, filename) {
+  await fetch(uri)
     .then(res => {
       const dest = fs.createWriteStream(filename)
       res.body.pipe(dest)
     })
+    .then(function(res) {
+      console.log('download succeeded')
+    })
     .catch(function (err) {
-      console.log('downloading ' + uri + ' to ' + filename + ' failed')
+      console.log('download failed of ' + uri + ' to ' + filename)
     })
 }
 
 
 
 fdk.handle(async function (input, ctx) {
-  console.log('received input ' + input)
+  console.log('received input url ' + input.imageurl)
   var inputFileURL = String(input.imageurl);
   var inputFileName = '/tmp/' + inputFileURL.substring(inputFileURL.lastIndexOf('/')+1);
   console.log('downloading image from ' + inputFileURL + ' to ' + inputFileName);
