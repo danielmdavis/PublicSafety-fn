@@ -1,47 +1,34 @@
 const fdk=require('@fnproject/fdk');
-const request=require('request');
 const fs=require('fs');
 const fetch=require('node-fetch');
+const FormData = require('form-data');
 
 // Evaluate the drone's image and find out whether it looks like a fire.
 // curl -X POST --noproxy '*' http://132.145.211.255:9093/oaa-scoring/services/v1/myservices/adapted_1/score  -F  "imageData=@$i" -H "Content-Type: multipart/form-data; boundary=BOUNDARY" -H "Accept: application/json" -w "   \n\n\n\n"
 
 
-function POSTcaller (inputFileName, inputFileData, context) {
-  var options = {
+function POSTcaller (inputFileName, context) {
+  const form = new FormData();
+  form.append('imageData', fs.createReadStream(inputFileName));
+
+  var uri = 'http://132.145.211.255:9093/oaa-scoring/services/v1/myservices/adapted_1/score'
+  const options = {
     method: 'POST',
-    uri: 'http://132.145.211.255:9093/oaa-scoring/services/v1/myservices/adapted_3/score',
-    headers:
-    {
-      'cache-control': 'no-cache',
-//      'Authorization': 'Basic Y2xvdWQuYWRtaW46I0FCQ0RlZmdoMTIzNCM=',
-      'content-type': 'multipart/form-data; boundary=BOUNDARY',
-      'Accept': 'application/json'
-    },
-    formData:
-      { imageData:
-        { value: inputFileData,
-        options:
-        { filename: inputFileName,
-          contentType: null }
-      }
-    }
-  };
+    body: form
+  }
 
   return new Promise( async function (resolve, reject) {
-    await request(options, function (error, response, body) {
-      if (error) {
-        console.log("error in request: " + error)
-        return reject(error)
-      }
-      try {
-        console.log("body received:" + body)
-        resolve(body);
-      } catch(e) {
-        console.log("error in catch: " + e)
+    await fetch(uri, options)
+      .then(function(res) {
+        myJSON = res.json()
+        console.log("JSON is " + myJSON)
+        return myJSON
+      })
+      .then(function(json) {resolve(json) })
+      .catch(e => {
+        console.log('error in POSTcaller: ' + e)
         reject(e)
-      }
-    })
+      })
   })
 }
 
@@ -72,11 +59,7 @@ fdk.handle(async function (input, ctx) {
   var retval = ''
   await download(inputFileURL, inputFileName)
 
-  // and then read it back out
-  var inputFileData = fs.createReadStream(inputFileName)
-  console.log("Trying to recognize " + inputFileName)
-
-  retval = await POSTcaller(inputFileName, inputFileData)
+  retval = await POSTcaller(inputFileName)
   console.log("retval is " + retval)
   return retval
 })
