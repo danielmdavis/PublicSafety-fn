@@ -10,12 +10,12 @@ const fetch=require('node-fetch');
 function POSTcaller (inputFileName, inputFileData, context) {
   var options = {
     method: 'POST',
-    uri: 'http://132.145.211.255:9093/oaa-scoring/services/v1/myservices/adapted_1/score',
+    uri: 'http://132.145.211.255:9093/oaa-scoring/services/v1/myservices/adapted_3/score',
     headers:
     {
       'cache-control': 'no-cache',
 //      'Authorization': 'Basic Y2xvdWQuYWRtaW46I0FCQ0RlZmdoMTIzNCM=',
-      'content-type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW',
+      'content-type': 'multipart/form-data; boundary=BOUNDARY',
       'Accept': 'application/json'
     },
     formData:
@@ -28,8 +28,8 @@ function POSTcaller (inputFileName, inputFileData, context) {
     }
   };
 
-  return new Promise( function (resolve, reject) {
-    request(options, function (error, response, body) {
+  return new Promise( async function (resolve, reject) {
+    await request(options, function (error, response, body) {
       if (error) {
         console.log("error in request: " + error)
         return reject(error)
