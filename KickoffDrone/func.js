@@ -16,18 +16,6 @@ async function callDrone(hostname, remark) {
     method: 'POST',
     body: form
   }
-//    "headers": {
-//      "content-type": "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
-//      "Content-Type": "application/x-www-form-urlencoded",
-//      "Accept": "*/*",
-//      "Cache-Control": "no-cache",
-//      "Host": hostname,
-//      "accept-encoding": "gzip, deflate",
-//      "content-length": "179",
-//      "Connection": "keep-alive",
-//      "cache-control": "no-cache"
-//    }
-//  }
 
   return new Promise( async function (resolve, reject) {
     var json = {}
