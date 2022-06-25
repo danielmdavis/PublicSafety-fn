@@ -8,6 +8,6 @@
 	"dependencies": {
 		"@fnproject/fdk": "0.0.15",
 		"form-data": "^2.5.0",
-		"node-fetch": "^2.6.0"
+		"node-fetch": "^2.6.7"
 	}
 }
